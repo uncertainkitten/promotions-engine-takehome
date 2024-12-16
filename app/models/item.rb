@@ -4,6 +4,7 @@ class Item < ApplicationRecord
 
     belongs_to :carts, optional: true
     belongs_to :inventory, optional: true
+    has_one :category
 
     def self.split_item(item, amount, cart_id)
         item_attrs = {

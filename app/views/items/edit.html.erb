@@ -1,5 +1,5 @@
 <h1>Edit item</h1>
-<%= form_with(model: @item, url: inventory_items_path) do |form| %>
+<%= form_with(model: @item, url: inventory_item_path) do |form| %>
     <div>
       <%= form.label :name %>
       <%= form.text_field :name %>
@@ -35,4 +35,4 @@
       <%= form.submit %>
     </div>
 <% end %>
-<%= link_to "Cancel", items_path %>
+<%= link_to "Cancel", inventory_path(@inventory.id)%>

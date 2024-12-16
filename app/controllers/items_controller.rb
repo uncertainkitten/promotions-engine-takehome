@@ -30,7 +30,7 @@ class ItemsController < ApplicationController
 
     def update
         if @item.update(item_params)
-            redirect_to @item
+            redirect_to inventory_path(@inventory.id)
         else
             render :edit, status: :unprocessable_entity
         end
