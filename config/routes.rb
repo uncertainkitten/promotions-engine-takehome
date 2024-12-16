@@ -15,6 +15,6 @@ Rails.application.routes.draw do
   # root "posts#index"
   root "items#index"
   resources :inventories, only: [:show, :new, :edit] do
-    resources :items, only: [:show, :new, :edit, :destroy]
+    resources :items, only: [:show, :new, :create, :edit, :update, :destroy]
   end
 end

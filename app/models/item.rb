@@ -2,8 +2,8 @@ class Item < ApplicationRecord
     validates :name, presence: true
     validates :quantity, numericality: { greater_than_or_equal_to: 0 }
 
-    has_and_belongs_to_many :carts
-    belongs_to :inventory
+    belongs_to :carts, optional: true
+    belongs_to :inventory, optional: true
 
     def self.split_item(item, amount, cart_id)
         item_attrs = {

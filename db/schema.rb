@@ -10,19 +10,13 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2024_12_16_051506) do
+ActiveRecord::Schema[8.0].define(version: 2024_12_16_065541) do
   create_table "carts", force: :cascade do |t|
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
 
   create_table "categories", force: :cascade do |t|
-    t.string "name"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-  end
-
-  create_table "customers", force: :cascade do |t|
     t.string "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -84,6 +78,8 @@ ActiveRecord::Schema[8.0].define(version: 2024_12_16_051506) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.boolean "business_user"
+    t.integer "business_id"
+    t.index ["business_id"], name: "index_users_on_business_id"
     t.index ["email_address"], name: "index_users_on_email_address", unique: true
   end
 
@@ -94,4 +90,5 @@ ActiveRecord::Schema[8.0].define(version: 2024_12_16_051506) do
   add_foreign_key "promotions", "categories"
   add_foreign_key "promotions", "users"
   add_foreign_key "sessions", "users"
+  add_foreign_key "users", "users", column: "business_id"
 end

@@ -4,6 +4,6 @@
 <p>Weight: <%= @item.weight%> g</p>
 <p>Price: $<%= @item.price %></p>
 <%= link_to "Edit", edit_inventory_item_path(@inventory.id, @item) %>
-<%= link_to "Delete",[@inventory, @item], :method => :delete%>
+<%= link_to "Delete", [@inventory, @item], method: :delete, data: {turbo_method: :delete, turbo_confirm: 'Are you sure?'} %>
 
 <%= link_to "Back", inventory_path(@inventory.id) %>
