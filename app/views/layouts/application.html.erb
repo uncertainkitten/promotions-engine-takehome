@@ -25,6 +25,9 @@
   <body>
     <nav>
       <%= link_to "Home", root_path %>
+      <% unless @current.business_user %>
+        <%= link_to "Cart", cart_path(@current.cart.id) %>
+      <% end %>
       <%= button_to "Log out", session_path, method: :delete if authenticated? %>
     </nav>
     <main>

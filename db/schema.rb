@@ -10,10 +10,12 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2024_12_16_065541) do
+ActiveRecord::Schema[8.0].define(version: 2024_12_17_042445) do
   create_table "carts", force: :cascade do |t|
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "user_id", null: false
+    t.index ["user_id"], name: "index_carts_on_user_id"
   end
 
   create_table "categories", force: :cascade do |t|
@@ -83,6 +85,7 @@ ActiveRecord::Schema[8.0].define(version: 2024_12_16_065541) do
     t.index ["email_address"], name: "index_users_on_email_address", unique: true
   end
 
+  add_foreign_key "carts", "users"
   add_foreign_key "inventories", "users"
   add_foreign_key "items", "carts"
   add_foreign_key "items", "categories"

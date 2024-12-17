@@ -1,11 +1,13 @@
 class ItemsController < ApplicationController
     before_action :set_item, only: %i[ show edit update destroy ]
+    before_action :check_permissions, only: %i[ new create edit update ]
 
     def index
         @items = Item.all
     end
 
     def show
+        @current = Current.user
     end
 
     def new
@@ -50,4 +52,12 @@ class ItemsController < ApplicationController
       def item_params
         params.expect(item: [ :name, :brand, :weight, :quantity, :price, :category_id ])
       end
+
+      def check_permissions
+        @current = Current.user
+        @inventory = Inventory.find(params[:inventory_id])
+        unless @current.business_user && @current.id === @inventory.user_id
+            redirect_to inventory_path(@inventory.id)
+        end
+    end
 end

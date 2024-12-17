@@ -1,16 +1,18 @@
 class ApplicationController < ActionController::Base
   include Authentication
+  before_action :set_current
   # Only allow modern browsers supporting webp images, web push, badges, import maps, CSS nesting, and CSS :has.
   allow_browser versions: :modern
-  def current_cart         
-    if current_user.present?
-     current_user.current_cart
-    else  
-      Cart.find(session[:cart_id])  
+  def index
+    if Current.user.business_user
+      redirect_to "/inventories/#{Current.user.inventory.id}"
+    else
+      redirect_to "/inventories/#{Current.user.business.inventory.id}"
     end
-    rescue ActiveRecord::RecordNotFound  
-      cart = Cart.create  
-      session[:cart_id] = cart.id  
-      cart  
-  end 
+  end
+
+  private
+  def set_current
+    @current = Current.user
+  end
 end

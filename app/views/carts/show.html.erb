@@ -1,0 +1,14 @@
+<h1>Items in Cart</h1>
+<% @items.each do |item| %>
+  <div class="item">
+    <h2><%= item.name %></h2>
+    <h4><%= item.brand %></h2>
+    <p>Quantity: <%=item.quantity%></p>
+    <p>Weight: <%= item.weight%> g</p>
+    <p>Price (each): <%= number_to_currency(item.price) %></p>
+    <p>Price (for all): <%= number_to_currency(item.price * item.quantity) %></p>
+  </div>
+<% end %>
+<div class="total">
+    <h3>Total: <%= number_to_currency(@total) %></h3
+</div>

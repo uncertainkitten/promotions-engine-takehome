@@ -2,8 +2,24 @@
 <h3><%= @item.brand %></h3>
 <p>Quantity: <%=@item.quantity%></p>
 <p>Weight: <%= @item.weight%> g</p>
-<p>Price: $<%= @item.price %></p>
-<%= link_to "Edit", edit_inventory_item_path(@inventory.id, @item) %>
-<%= link_to "Delete", [@inventory, @item], method: :delete, data: {turbo_method: :delete, turbo_confirm: 'Are you sure?'} %>
+<p>Price: $<%= number_to_currency(@item.price) %></p>
+
+<% if (@current.business_user && @current.inventory.id == @inventory.id)%>
+    <%= link_to "Edit", edit_inventory_item_path(@inventory.id, @item) %>
+    <%= link_to "Delete", [@inventory, @item], method: :delete, data: {turbo_method: :delete, turbo_confirm: 'Are you sure?'} %>
+<% elsif !@current.business_user && @current.business.inventory.id == @inventory.id %>
+    <%= form_with model: @current.cart do |form| %>
+        <div>
+            <%= form.label :amount %>
+            <%= form.number_field :amount, step: 1, in: 1..@item.quantity%>
+            <%= form.hidden_field :item_id, value: @item.id %>
+        </div>
+        <%= form.submit "Add to Cart" %>
+    <% end %>
+    <% if(flash.notice) %>
+        <div class="notice"><%= flash[:notice] %></div>
+    <% end %>
+<% end %>
+
 
 <%= link_to "Back", inventory_path(@inventory.id) %>
